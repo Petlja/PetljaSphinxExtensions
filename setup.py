@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     python_requires=">=3.7",
-    version='1.0.1',
+    version='1.0.2',
     author="Fondacija Petlja",
     author_email="team@petlja.org",
     description="Petlja's sphinx extensions for e-learning content",
