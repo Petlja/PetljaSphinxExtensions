@@ -65,6 +65,7 @@ class FIDBDirective(Directive):
         """
 
         self.options['question'] = "\n".join(self.content)
+        print(self.options['answer'])
         self.content=[]
         innode = FIDBNode(self.options)
         self.state.nested_parse(self.content, self.content_offset, innode)
