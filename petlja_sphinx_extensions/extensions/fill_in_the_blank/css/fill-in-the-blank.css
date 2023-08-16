@@ -34,6 +34,10 @@ fill-in-the-blank::part(message) {
     padding: 10px;
 }
 
+fill-in-the-blank::part(error) {
+    border: 1px solid red !important;
+}
+
 fill-in-the-blank::part(correct) {
     background-color: #a9e0d3;
 }

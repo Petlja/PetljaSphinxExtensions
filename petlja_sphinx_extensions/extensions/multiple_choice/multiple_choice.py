@@ -70,7 +70,8 @@ class MchoiceDirective(Directive):
         :return:
         """
 
-        self.options['question'] = self.content[0]
+        self.options['question'] = "\n".join(self.content)
+        self.content = []
         self.options['answers'] = ""
         for i in range(1, 7):
             answer_label = f'answer{i}'

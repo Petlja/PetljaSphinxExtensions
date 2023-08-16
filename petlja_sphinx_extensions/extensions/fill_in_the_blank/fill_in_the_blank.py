@@ -64,7 +64,8 @@ class FIDBDirective(Directive):
         :return:
         """
 
-        self.options['question'] = self.content[0]
+        self.options['question'] = "\n".join(self.content)
+        self.content=[]
         innode = FIDBNode(self.options)
         self.state.nested_parse(self.content, self.content_offset, innode)
 
