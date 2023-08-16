@@ -5,36 +5,37 @@ from docutils.parsers.rst import Directive, directives
 
 
 def setup(app):
-    app.add_css_file('multiple-choice.css')
-    app.add_js_file('multiple-choice.js')
-    app.add_directive('mchoice', MchoiceDirective)
-    app.add_node(MchoiceNode, html=(visit_note_node, depart_note_node))
+    app.add_css_file('fill-in-the-blank.css')
+    app.add_js_file('fill-in-the-blank.js')
+    app.add_directive('fitb', FIDBDirective)
+    app.add_node(FIDBNode, html=(visit_note_node, depart_note_node))
 
 
 
 TEMPLATE_START = '''
-    <div class="course-box course-box-question course-content petlja-problem-box choice-question">
+    <div class="course-box course-box-question course-content petlja-problem-box fitb-question">
         <div class="image-background"></div>
         <div class="petlja-problem-box-icon-holder"> </div>
         <img src="../_static/qchoice-img.svg" class="petlja-problem-image qchoice-image" />
-    <multiple-choice question="%(question)s" %(answers)s correct-answers="%(correct)s">
+    <fill-in-the-blank
+    question="%(question)s"
+    regex="%(answer)s">
     '''
 
 
 TEMPLATE_END = '''
-      </multiple-choice>
+      </fill-in-the-blank>
     </div>
     '''
 
 
-class MchoiceNode(nodes.General, nodes.Element):
+class FIDBNode(nodes.General, nodes.Element):
     def __init__(self, content):
-        super(MchoiceNode, self).__init__()
+        super(FIDBNode, self).__init__()
         self.note = content
 
 
 def visit_note_node(self, node):
-
     node.delimiter = "_start__{}_".format("info")
     self.body.append(node.delimiter)
     res = TEMPLATE_START % node.note
@@ -47,20 +48,13 @@ def depart_note_node(self, node):
     self.body.remove(node.delimiter)
 
 
-class MchoiceDirective(Directive):
-
+class FIDBDirective(Directive):
     required_arguments = 0
     optional_arguments = 0
     has_content = True
     option_spec = {}
     option_spec.update({
-        'answer1':directives.unchanged,
-        'answer2':directives.unchanged,
-        'answer3':directives.unchanged,
-        'answer4':directives.unchanged,
-        'answer5':directives.unchanged,
-        'answer6':directives.unchanged,
-        'correct': directives.unchanged,
+    'answer': directives.unchanged,
     })
 
     def run(self):
@@ -71,13 +65,9 @@ class MchoiceDirective(Directive):
         """
 
         self.options['question'] = self.content[0]
-        self.options['answers'] = ""
-        for i in range(1, 7):
-            answer_label = f'answer{i}'
-            if answer_label in self.options:
-                self.options['answers'] += f' {answer_label}="{self.options[answer_label]}" '
-        
-        innode = MchoiceNode(self.options)
+        innode = FIDBNode(self.options)
         self.state.nested_parse(self.content, self.content_offset, innode)
 
         return [innode]
+    
+
