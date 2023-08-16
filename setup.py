@@ -10,7 +10,6 @@ setup(
     include_package_data=True,
     zip_safe=False,
     name='petlja_sphinx_extensions',
-    version='0.1',
     packages=find_packages(),
     install_requires=[
         'sphinx',
