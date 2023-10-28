@@ -1,6 +1,6 @@
 import os
 
-modules = ['notes', 'multiple_choice', 'fill_in_the_blank']
+modules = ['notes', 'multiple_choice', 'fill_in_the_blank', 'py_code']
 
 def static_dirs():
     basedir = os.path.dirname(__file__)
