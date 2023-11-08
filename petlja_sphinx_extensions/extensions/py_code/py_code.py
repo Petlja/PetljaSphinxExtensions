@@ -2,14 +2,23 @@ __author__ = 'petlja'
 
 from docutils import nodes
 from docutils.parsers.rst import Directive, directives
+from sphinx.util.fileutil import copy_asset
+from pkg_resources import resource_filename
 
 
 def setup(app):
     app.add_css_file('py-code.css')
     app.add_js_file('py-code.js')
-    app.add_js_file('https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js')
+    app.connect('env-updated', copy_workers)
     app.add_directive('py-code', PyCodeDirective)
     app.add_node(PyCodeNode, html=(visit_pycode_node, depart_pycode_node))
+
+def copy_workers(app, env):
+    static_files = resource_filename('petlja_sphinx_extensions', 'extensions/py_code/js/workers')
+    if app.builder.name == 'petlja_builder':
+        copy_asset(static_files, app.builder.rootdir)
+    else:
+        copy_asset(static_files, app.builder.outdir)
 
 
 
