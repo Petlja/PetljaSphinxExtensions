@@ -4,6 +4,8 @@ from docutils import nodes
 from docutils.parsers.rst import Directive, directives
 from sphinx.util.fileutil import copy_asset
 from pkg_resources import resource_filename
+import html
+
 
 
 def setup(app):
@@ -14,7 +16,7 @@ def setup(app):
     app.add_node(PyCodeNode, html=(visit_pycode_node, depart_pycode_node))
 
 def copy_workers(app, env):
-    static_files = resource_filename('petlja_sphinx_extensions', 'extensions/py_code/js/workers')
+    static_files = resource_filename('petlja_sphinx_extensions', 'extensions/py_code/workers')
     if app.builder.name == 'petlja_builder':
         copy_asset(static_files, app.builder.rootdir)
     else:
@@ -72,7 +74,7 @@ class PyCodeDirective(Directive):
         :return:
         """
         self.options['divid'] = self.arguments[0]
-        self.options['code'] = "\n".join(self.content)
+        self.options['code'] = encode("\n".join(self.content))
         self.options['py_packages'] = ""
 
         if 'packages' in self.options:
@@ -85,3 +87,5 @@ class PyCodeDirective(Directive):
         return [innode]
     
 
+def encode(html_code):
+    return html.escape(html_code)
