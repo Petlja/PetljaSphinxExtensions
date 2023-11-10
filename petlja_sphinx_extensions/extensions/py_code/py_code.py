@@ -11,6 +11,7 @@ import html
 def setup(app):
     app.add_css_file('py-code.css')
     app.add_js_file('py-code.js')
+    app.add_js_file('https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js')
     app.connect('env-updated', copy_workers)
     app.add_directive('py-code', PyCodeDirective)
     app.add_node(PyCodeNode, html=(visit_pycode_node, depart_pycode_node))
