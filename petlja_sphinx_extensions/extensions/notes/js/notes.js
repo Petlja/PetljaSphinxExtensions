@@ -1,10 +1,4 @@
 $(document).ready(function () {
-    $("[data-level]").each(function (index) { 
-        var level=$(this).attr('data-level');
-        $(this).parent(".section").addClass('rst-level rst-level-'+level);
-    });
-
-
     if (document.querySelector('.learnmorenote-type .course-content ')) {
         var allNodes = document.querySelectorAll('.learnmorenote-type .course-content ');
         for (var i = 0; i < allNodes.length; i++) {
