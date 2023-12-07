@@ -26,7 +26,7 @@ def copy_workers(app, env):
 
 
 TEMPLATE_START = '''
-  <py-code id="%(divid)s">
+  <py-code id="%(divid)s" %(ai)s>
     %(py_packages)s
     <textarea>
 %(code)s
@@ -65,6 +65,7 @@ class PyCodeDirective(Directive):
     option_spec = {}
     option_spec.update({
         'packages': directives.unchanged,
+        'opt-in-ai': directives.unchanged,
     })
 
 
@@ -82,6 +83,10 @@ class PyCodeDirective(Directive):
             for package in self.options['packages'].split(','):
                 self.options['py_packages'] += "<python-package>" + package + "</python-package>" + "\n"
 
+        if 'opt-in-ai' in self.options:
+            self.options['ai'] = 'opt-in-ai'
+        else:
+            self.options['ai'] = ''
 
         innode = PyCodeNode(self.options)
 
