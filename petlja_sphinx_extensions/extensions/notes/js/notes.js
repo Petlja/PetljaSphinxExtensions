@@ -1,4 +1,4 @@
-$(document).ready(function () {
+window.addEventListener('load', function (){
     if (document.querySelector('.learnmorenote-type .course-content ')) {
         var allNodes = document.querySelectorAll('.learnmorenote-type .course-content ');
         for (var i = 0; i < allNodes.length; i++) {
